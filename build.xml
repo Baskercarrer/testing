@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project []>
+<project name="HelloNeel" default="reports" basedir=".">
+	<property environment="env" />
+	<property name="ws.home" value="${basedir}" />
+	<property name="ws.jars" value="/home/hduser/Documents/selenium-2.43.1/libs" />
+	<property name="test.dest" value="${ws.home}/build" />
+	<property name="test.src" value="${ws.home}/src" />
+	<property name="ng.result" value="test-output" />
+
+	<target name="setClasspath" unless="test.classpath">
+		<path id="classpath_jars">
+			<fileset dir="${ws.jars}" includes="*.jar" />
+		</path>
+		<pathconvert pathsep=";" property="test.classpath" refid="classpath_jars" />
+	</target>
+	<target name="usage">
+		<echo> "Ant will work";</echo>
+	</target>
+	<target name="init" depends="setClasspath">
+		<tstamp>
+			<format property="start.time" pattern="MM/dd/yyyy hh.mm **" />
+		</tstamp>
+		<condition property="ANT" value="${env.ANT_HOME}/bin/ant.bat" else="${env.ANT_HOME}/bin/ant">
+			<os family="windows" />
+		</condition>
+		<taskdef name="testng" classpath="${test.classpath}" classname="org.testng.TestNGAntTask" />
+	</target>
+
+
+	<target name="clean">
+		<delete dir="${test.dest}" />
+	</target>
+
+	<target name="compile" depends="init, clean">
+		<delete includeemptydirs="true" quiet="true">
+			<fileset dir="${test.dest}" includes="**/*" />
+		</delete>
+		<echo message="making directory..." />
+		<mkdir dir="${test.dest}" />
+		<echo message="Classpath===: ${test.classpath}" />
+		<echo message="compiling..." />
+		<javac debug="true" destdir="${test.dest}" srcdir="${test.src}" target="1.7" classpath="${test.classpath}">
+		</javac>
+	</target>
+
+	<target name="run" depends="compile">
+		<testng classpath="${test.classpath};${test.dest}" haltonfailure="true" suitename="Suite" useDefaultListeners="true" listeners="org.uncommons.reportng.HTMLReporter">
+			<xmlfileset dir="${ws.home}" includes="testng.xml" />
+			<sysproperty key="org.uncommons.reportng.title" value="GPC Client Name"/>
+<sysproperty key = "org.uncommons.reportng.escape-output" value= "on"/>
+	<sysproperty key = "org.uncommons.reportng.failures-only" value= "fasle"/>
+			<sysproperty key="org.uncommons.reportng.velocity-log" value="true"/>
+		</testng>
+	</target>
+
+	<path id = "test.C">
+		<fileset dir ="${ws.jars}" includes="*.jar"/>
+	</path>
+	<target name="reports" depends="run">
+		<mkdir dir="${ws.home}/XSLT_Reports/output" />
+		<xslt in="${ng.result}/testng-results.xml" style="src/testng-results.xsl" out="${ws.home}/XSLT_Reports/output/index.html" classpathref="test.C" processor="SaxonLiaison">
+			<param name="testNgXslt.outputDir" expression="${ws.home}/XSLT_Reports/output/"/>
+			<param name="testNgXslt.showruntimeTotals" expression="true" />
+		</xslt>
+	</target>
+</project>
