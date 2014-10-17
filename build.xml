@@ -3,7 +3,7 @@
 <project name="HelloNeel" default="reports" basedir=".">
 	<property environment="env" />
 	<property name="ws.home" value="${basedir}" />
-	<property name="ws.jars" value="/home/hduser/Documents/selenium-2.43.1/libs" />
+	<property name="ws.jars" value="/home/basker/Downloads/selenium-2.42.2/libs" />
 	<property name="test.dest" value="${ws.home}/build" />
 	<property name="test.src" value="${ws.home}/src" />
 	<property name="ng.result" value="test-output" />
