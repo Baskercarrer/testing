@@ -2,12 +2,15 @@ package allpks;
 
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.annotations.*;
 
 public class login {
@@ -28,13 +31,7 @@ public class login {
 
   @Test
   public void testUntitled() throws Exception {
-    driver.get("http://localhost:8081/stackinsight/");
-    driver.findElement(By.id("login-emailid")).clear();
-    driver.findElement(By.id("login-emailid")).sendKeys("test@guidanz.com");
-    driver.findElement(By.id("login-password")).clear();
-    driver.findElement(By.id("login-password")).sendKeys("G123");
-    driver.findElement(By.id("login-button")).click();
-    driver.findElement(By.linkText("Logout")).click();
+	Assert.assertEquals(5,4);
   }
 
   @AfterClass
