@@ -3,7 +3,7 @@
 <project name="HelloNeel" default="reports" basedir=".">
 	<property environment="env" />
 	<property name="ws.home" value="${basedir}" />
-	<property name="ws.jars" value="D:\Automation Files\Ivy-Mobility\Admantium_lib\" />
+	<property name="ws.jars" value="D:\Jenkins\selenium-2.43.1\libs" />
 	<property name="test.dest" value="${ws.home}/build" />
 	<property name="test.src" value="${ws.home}/src" />
 	<property name="ng.result" value="test-output" />
